@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans&family=Winky+Rough&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 98%; /* Light beige - F5F5DC - Adjusted to a neutral light grey */
+    --foreground: 220 10% 20%;
+
+    --card: 220 20% 96%;
+    --card-foreground: 220 10% 20%;
+
+    --popover: 220 20% 98%;
+    --popover-foreground: 220 10% 20%;
+
+    --primary: 181 50% 43%; /* Earthy Green - #38A3A5 */
+    --primary-foreground: 220 20% 98%;
+    
+    --secondary: 181 30% 65%;
+    --secondary-foreground: 220 10% 20%;
+    
+    --muted: 220 15% 90%;
+    --muted-foreground: 220 10% 45%;
+    
+    --accent: 51 100% 50%; /* Sunny Yellow - #FFD700 */
+    --accent-foreground: 51 100% 5%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 220 15% 85%;
+    --input: 220 15% 92%;
+    --ring: 181 50% 43%;
+  }
+ 
+  .dark {
+    --background: 220 15% 10%;
+    --foreground: 220 20% 96%;
+
+    --card: 220 15% 13%;
+    --card-foreground: 220 20% 96%;
+
+    --popover: 220 15% 10%;
+    --popover-foreground: 220 20% 96%;
+    
+    --primary: 181 50% 53%; /* Earthy Green - slightly lighter for dark mode */
+    --primary-foreground: 220 10% 10%;
+
+    --secondary: 181 30% 40%;
+    --secondary-foreground: 220 20% 96%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 15% 70%;
+    
+    --accent: 51 100% 60%; /* Sunny Yellow - slightly lighter for dark mode */
+    --accent-foreground: 51 100% 5%;
+    
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 15% 25%;
+    --input: 220 15% 18%;
+    --ring: 181 50% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-attachment: fixed;
+  }
+}
+
+/* Weather card animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin 20s linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-100%) translateX(-5px); opacity: 1; }
+  100% { transform: translateY(100%) translateX(5px); opacity: 0; }
+}
+
+.animate-fall {
+  animation: fall linear infinite;
+}
+
+/* Timeline Styles */
+.timeline {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  background-color: hsl(var(--muted));
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
+  border-radius: 50px;
+}
+
+.container-timeline {
+  padding: 10px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease-out;
+  margin-bottom: 50px;
+}
+
+.container-timeline.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.container-timeline::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: -17px;
+  background-color: hsl(var(--card));
+  border: 4px solid hsl(var(--primary));
+  top: 15px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  left: 50%;
+}
+
+.left::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  right: 30px;
+  border: medium solid hsl(var(--card));
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent hsl(var(--card));
+}
+
+.right::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  left: 30px;
+  border: medium solid hsl(var(--card));
+  border-width: 10px 10px 10px 0;
+  border-color: transparent hsl(var(--card)) transparent transparent;
+}
+
+.right::after {
+  left: -16px;
+}
+
+.content-timeline {
+  padding: 20px 30px;
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  position: relative;
+  border-radius: 15px;
+  border: 1px solid hsl(var(--border));
+}
+
+.content-timeline h3 {
+  color: hsl(var(--primary));
+  margin-bottom: 20px;
+}
+
+.content-timeline p {
+  color: hsl(var(--muted-foreground));
+}
+
+@media screen and (max-width: 600px) {
+  .timeline::after {
+    left: 31px;
+  }
+  
+  .container-timeline{
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+  
+  .container-timeline::before {
+    left: 60px;
+    border: medium solid hsl(var(--card));
+    border-width: 10px 10px 10px 0;
+    border-color: transparent hsl(var(--card)) transparent transparent;
+  }
+
+  .left::after, .right::after {
+    left: 15px;
+  }
+  
+  .right {
+    left: 0%;
+  }
+}
