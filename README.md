@@ -142,6 +142,9 @@ The *Digital Library* is a per-farmer diagnosis and advisory storage system.
 
 ---
 
+## Deployment Link :
+You can view the live demo [here](https://your-live-demo-link.com).
+
 ## 🧪 Installation Instructions
 
 To run NeerVaani locally:
